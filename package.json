@@ -1,0 +1,44 @@
+{
+  "name": "node-red-contrib-bert-tokenizer",
+  "version": "1.0.0",
+  "description": "A simple NodeRED module to implement bert-tokenizer",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && npm run copy",
+    "copy": "ncp src/index.html dist/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tedhtchang/node-red-contrib-bert-tokenizer.git"
+  },
+  "keywords": [
+    "node-red",
+    "nodejs",
+    "tfjs",
+    "tensorflow",
+    "deeplearning",
+    "BERT",
+    "tokenizer"
+  ],
+  "author": "Ted Chang",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/tedhtchang/node-red-contrib-bert-tokenizer/issues"
+  },
+  "homepage": "https://github.com/tedhtchang/node-red-contrib-bert-tokenizer#readme",
+  "node-red": {
+    "nodes": {
+      "bert-tokenizer": "dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@types/node-fetch": "^2.5.5",
+    "bert-tokenizer": "^1.0.0",
+    "ncp": "^2.0.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.7",
+    "typescript": "^3.8.3"
+  }
+}

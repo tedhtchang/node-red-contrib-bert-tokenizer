@@ -1,0 +1,76 @@
+<!-- main node definition -->
+<script type="text/javascript">
+    RED.nodes.registerType('bert-tokenizer',{
+        category: 'analysis-function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            url: {
+                value:"",
+                required: false,
+                type: String
+            },
+        },
+        inputs:1,
+        outputs:1,
+        icon: "token-coin.png",
+        label: function() {
+            return this.name||"bert-tokenizer";
+        }
+    });
+</script>
+
+<!-- Editor template: editor content for the bert-tokenizer node -->
+<script type="text/html" data-template-name="bert-tokenizer">
+    <div class="form-row">
+        <!-- https://fontawesome.com/v4.7.0/icons/ -->
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="BERT-Tokenizer">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-link"></i> URL</label>
+        <input type="text" id="node-input-url">
+    </div>
+</script>
+
+<!-- help text in the info sidebar tab -->
+</script>
+<script type="text/html" data-help-name="bert-tokenizer">
+    <!-- the first <p> is the tooltip when hovering over the pallette -->
+    <p>Generate a single input from a text to feed into BERT models</p>
+
+    <h3>Input</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">string</span>
+        </dt>
+        <dd>Text to be converted into input feature array for BERT model.</dd>
+
+        <dt class="optional">URL
+            <span class="property-type">string</span>
+        </dt>
+        <dd>Url to custom vocabulary:</dd>
+        <dd>1. leave empty to load the default
+        <dd>2. http(s):// to fetch the model from web.</dd>
+        <dd>3. file:// to load the vocaburlary file on the server.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">named array object</span>
+        </dt>
+        <dd>
+            <p>The output is an object containing 3 named arrays:
+            <p>{ inputIds: array[128],
+            <p>  segmentIds: array[128],
+            <p>  inputMask: array[128] }
+        </dd>
+
+    <h3>Details</h3>
+        <p>The input payload is text (i.e. words, sentences, etc) to be converted into input
+        feature for the BERT model. The input is tokenized and no longer than 126 tokens.
+        Each name array in the output object has 128 numbers.</p>
+        <p>If the URL failed to load then the default vocabulary will be load instead.</p>
+</script>
