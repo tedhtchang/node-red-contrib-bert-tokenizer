@@ -34,11 +34,11 @@
   "dependencies": {
     "@types/node-fetch": "^2.5.5",
     "bert-tokenizer": "^1.0.0",
-    "ncp": "^2.0.0",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@types/node": "^13.7.7",
+    "ncp": "^2.0.0",
     "typescript": "^3.8.3"
   }
 }
