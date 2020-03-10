@@ -61,7 +61,7 @@ export = function (RED: NodeRed) {
       this.loadVocabulary(config.url);
       RED.nodes.createNode(this, config);
       this.on('input', (msg: NodeRedReceivedMessage) => {
-      this.handleRequest(msg.payload);
+        this.handleRequest(msg.payload);
       });
     }
 
@@ -112,7 +112,7 @@ export = function (RED: NodeRed) {
         }
       }
       // Load the default vocab if url is not specified.
-      this.bertTokenizer = new BertTokenizer(this.localPath, true);
+      this.bertTokenizer = (vocabUrl === "")? new BertTokenizer() : new BertTokenizer(this.localPath, true)
       console.log("Vocabulary Loaded.");
     }
 
