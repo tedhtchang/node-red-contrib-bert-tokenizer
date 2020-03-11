@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-bert-tokenizer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple NodeRED module to implement bert-tokenizer",
   "main": "dist/index.js",
   "scripts": {
