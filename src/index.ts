@@ -30,28 +30,19 @@ type NodeRedProperties = {
 };
 
 /**
- * Represent Node-Red's message that passes to a node
+ * Represent Node-Red's node msg object to be passed in and out
+ * of nodes.
  */
-type NodeRedReceivedMessage = {
-  payload: string;
-};
-
-type NodeRedSendMessage = {
-  payload: namedArrayMap;
-};
-
-type namedArrayMap = {
-  inputIds: number[],
-  segmentIds: number[],
-  inputMask: number[]
+type NodeRedMessage = {
+  [name: string]: unknown
 }
 
 // Module for a Node-Red custom node
 export = function (RED: NodeRed) {
   class BertTokensNode{
-    private on: (event: string, fn: (msg: NodeRedReceivedMessage) => void) => void;
-    private send: (msg: NodeRedSendMessage) => void;
-    private error: (error: string, msg?: NodeRedReceivedMessage) => void;
+    private on: (event: string, fn: (msg: NodeRedMessage) => void) => void;
+    private send: (msg: NodeRedMessage) => void;
+    private error: (error: string, msg?: NodeRedMessage) => void;
 
     bertTokenizer: BertTokenizer;
     private _localPath: string = "node_modules/node-red-contrib-bert-tokenizer/node_modules/bert-tokenizer/assets/vocab.json";;
@@ -60,8 +51,8 @@ export = function (RED: NodeRed) {
     constructor (config: NodeRedProperties){
       this.loadVocabulary(config.url);
       RED.nodes.createNode(this, config);
-      this.on('input', (msg: NodeRedReceivedMessage) => {
-        this.handleRequest(msg.payload);
+      this.on('input', (msg: NodeRedMessage) => {
+        this.handleRequest(msg);
       });
     }
 
@@ -123,10 +114,11 @@ export = function (RED: NodeRed) {
     get localPath(){
       return this._localPath;
     }
-    handleRequest(text: string) {
-      const results = this.bertTokenizer.convertSingleExample(text);
-      console.log(results);
-        this.send({payload: results});
+    handleRequest(inMsg: NodeRedMessage) {
+      var outMsg = Object.assign({}, inMsg);
+      outMsg.payload = this.bertTokenizer.convertSingleExample(inMsg.payload as string);
+      console.log(outMsg.payload);
+      this.send(outMsg);
     }
   }
   RED.nodes.registerType("bert-tokenizer", BertTokensNode);
