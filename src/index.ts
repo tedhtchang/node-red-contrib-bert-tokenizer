@@ -117,7 +117,6 @@ export = function (RED: NodeRed) {
     handleRequest(inMsg: NodeRedMessage) {
       var outMsg = Object.assign({}, inMsg);
       outMsg.payload = this.bertTokenizer.convertSingleExample(inMsg.payload as string);
-      console.log(outMsg.payload);
       this.send(outMsg);
     }
   }
